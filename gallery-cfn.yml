@@ -14,6 +14,12 @@ Parameters:
     Type: String
     Description: ECR Repository for event rule
 
+  AwsAccessKeyEnv:
+    Type: String
+
+  AwsSecretAccessKeyEnv:
+    Type: String
+
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -277,9 +283,9 @@ Resources:
               Value: !Ref S3BucketName
           Secrets:
             - Name: AWS_ACCESS_KEY_ID
-              ValueFrom: "{{resolve:secretsmanager:AWS_ACCESS_KEY_ID:SecretString:token}}"
+              ValueFrom: !Ref AwsAccessKeyEnv
             - Name: AWS_SECRET_ACCESS_KEY
-              ValueFrom: "{{resolve:secretsmanager:AWS_SECRET_ACCESS_KEY:SecretString:token}}"
+              ValueFrom: !Ref AwsSecretAccessKeyEnv
           LogConfiguration:
             LogDriver: awslogs
             Options:
