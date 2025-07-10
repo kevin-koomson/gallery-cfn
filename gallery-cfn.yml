@@ -216,7 +216,7 @@ Resources:
       ExecutionRoleArn: !GetAtt ECSExecutionRole.Arn
       ContainerDefinitions:
         - Name: springboot-container
-          Image: public.ecr.aws/amazonlinux/amazonlinux:latest # Placeholder
+          Image: https://week5-cfn-templates.s3.eu-central-1.amazonaws.com/docker-images/springboot-app-latest.tar.gz
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
