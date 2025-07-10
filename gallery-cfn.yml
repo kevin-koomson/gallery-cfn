@@ -111,12 +111,6 @@ Resources:
     Properties:
       VpcId: !Ref VPC
 
-  PrivateRoute:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable
-      DestinationCidrBlock: 0.0.0.0/0
-
   PrivateSubnet1RTAssoc:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
