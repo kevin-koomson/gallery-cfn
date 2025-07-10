@@ -20,6 +20,10 @@ Parameters:
     Type: String
     Description: Application image URI
 
+  S3BucketName:
+    Type: String
+    Description: Bucket for storing application images
+
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -281,6 +285,17 @@ Resources:
           Image: !Ref ImageURI
           PortMappings:
             - ContainerPort: 8080
+          Environment:
+            - Name: AWS_REGION
+              Value: !Ref "AWS::Region"
+            - Name: AWS_BUCKET_NAME
+              Value: !Ref S3BucketName
+            - Name: AWS_ACCESS_KEY_ID
+              Value: !Sub "{{resolve:secretsmanager:AWS_ACCESS_KEY_ID:SecretString:token}}"
+            - Name: AWS_SECRET_ACCESS_KEY
+              Value: !Sub "{{resolve:secretsmanager:AWS_SECRET_ACCESS_KEY:SecretString:token}}"
+            - Name: AWS_REGION
+              Value: !Ref "AWS::Region"
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -324,6 +339,15 @@ Resources:
               Service: ecs-tasks.amazonaws.com
             Action: sts:AssumeRole
       Policies:
+        - PolicyName: SSMAccessPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                  - ssm:GetParameters
+                  - ssm:GetParametersByPath
+                Resource: "*"
         - PolicyName: ECRAccessPolicy
           PolicyDocument:
             Statement:
