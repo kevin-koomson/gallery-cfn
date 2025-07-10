@@ -14,7 +14,7 @@ Parameters:
   GitHubOAuthToken:
     Type: String
     NoEcho: true
-    Description: GitHub OAuth token stored in Secrets Manager or passed manually
+    Description: GitHub OAuth token stored in Secrets Manager or passed manually.
 
 Resources:
   VPC:
