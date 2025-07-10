@@ -285,17 +285,17 @@ Resources:
           Image: !Ref ImageURI
           PortMappings:
             - ContainerPort: 8080
-          Environment:
+          Secrets:
             - Name: AWS_REGION
-              Value: !Ref "AWS::Region"
+              ValueFrom: !Ref "AWS::Region"
             - Name: AWS_BUCKET_NAME
-              Value: !Ref S3BucketName
+              ValueFrom: !Ref S3BucketName
             - Name: AWS_ACCESS_KEY_ID
-              Value: !Sub "{{resolve:secretsmanager:AWS_ACCESS_KEY_ID:SecretString:token}}"
+              ValueFrom: "{{resolve:secretsmanager:AWS_ACCESS_KEY_ID:SecretString:token}}"
             - Name: AWS_SECRET_ACCESS_KEY
-              Value: !Sub "{{resolve:secretsmanager:AWS_SECRET_ACCESS_KEY:SecretString:token}}"
+              ValueFrom: "{{resolve:secretsmanager:AWS_SECRET_ACCESS_KEY:SecretString:token}}"
             - Name: AWS_REGION
-              Value: !Ref "AWS::Region"
+              ValueFrom: !Ref "AWS::Region"
           LogConfiguration:
             LogDriver: awslogs
             Options:
