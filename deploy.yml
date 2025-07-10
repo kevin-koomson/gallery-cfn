@@ -3,4 +3,5 @@ Name: 'gallery-app-stack'
 parameters:
   GitHubRepo: https://github.com/kevin-koomson/aws-photo-gallery
   GitHubOAuthToken: '{{resolve:secretsmanager:GitHubToken:SecretString:token}}'
+  ImageURI: 839071825379.dkr.ecr.eu-central-1.amazonaws.com/springboot-gallery-app:latest
 tags:
