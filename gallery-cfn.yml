@@ -2,20 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: All-in-One Stack VPC, ECS Infra, and CI/CD Pipeline for Spring Boot Blue/Green Deployment
 
 Parameters:
-  GitHubRepo:
-    Type: String
-    Description: GitHub repository (e.g., username/repo)
-
-  GitHubBranch:
-    Type: String
-    Default: main
-    Description: Branch to monitor in GitHub
-
-  GitHubOAuthToken:
-    Type: String
-    NoEcho: true
-    Description: GitHub OAuth token stored in Secrets Manager or passed manually.
-
   ImageURI:
     Type: String
     Description: Application image URI
@@ -509,7 +495,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - codepipeline:StartPipelineExecution
-                Resource: !GetAtt CodePipeline.Arn
+                Resource: !Ref CodePipeline
 
   CodePipelineRole:
     Type: AWS::IAM::Role
@@ -612,7 +598,7 @@ Resources:
           image-tag:
             - latest
       Targets:
-        - Arn: !GetAtt CodePipeline.Arn
+        - Arn: !Ref CodePipeline
           Id: codepipeline
           RoleArn: !GetAtt EventBridgeRole.Arn
 
