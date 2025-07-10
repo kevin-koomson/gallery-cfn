@@ -234,8 +234,8 @@ Resources:
   ECSService:
     Type: AWS::ECS::Service
     DependsOn: Listener
-    TaskDefinition: !Ref TaskDefinition
     Properties:
+      TaskDefinition: !Ref TaskDefinition
       ServiceName: springboot-service
       Cluster: !Ref ECSCluster
       DesiredCount: 1
