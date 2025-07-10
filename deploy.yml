@@ -1,0 +1,6 @@
+template-file-path: gallery-cfn.yml
+Name: 'gallery-app-stack'
+parameters:
+  GitHubRepo: https://github.com/kevin-koomson/aws-photo-gallery
+  GitHubOAuthToken: '{{resolve:secretsmanager:GitHubToken:SecretString:token}}'
+tags:
