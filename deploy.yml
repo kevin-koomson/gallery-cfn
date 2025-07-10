@@ -4,4 +4,5 @@ parameters:
   GitHubRepo: https://github.com/kevin-koomson/aws-photo-gallery
   GitHubOAuthToken: '{{resolve:secretsmanager:GitHubToken:SecretString:token}}'
   ImageURI: 839071825379.dkr.ecr.eu-central-1.amazonaws.com/springboot-gallery-app:latest
+  S3BucketName: week5-gallery
 tags:
