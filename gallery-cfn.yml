@@ -433,7 +433,7 @@ Resources:
                 - !Ref Listener
       ECSServices:
         - ClusterName: !Ref ECSCluster
-          ServiceName: !Ref ECSService
+          ServiceName: springboot-service
 
   CodeBuildRole:
     Type: AWS::IAM::Role
