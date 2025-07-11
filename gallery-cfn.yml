@@ -432,7 +432,7 @@ Resources:
               ListenerArns:
                 - !Ref Listener
       ECSServices:
-        - ClusterName: !Ref ECSCluster
+        - ClusterName: springboot-cluster
           ServiceName: springboot-service
 
   CodeBuildRole:
