@@ -2,6 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: All-in-One Stack VPC, ECS Infra, and CI/CD Pipeline for Spring Boot Blue/Green Deployment
 
 Parameters:
+  GitHubBranch:
+    Type: String
+    Default: main
+
   GitHubRepo:
     Type: String
 
