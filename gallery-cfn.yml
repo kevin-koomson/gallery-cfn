@@ -606,7 +606,7 @@ Resources:
           image-tag:
             - latest
       Targets:
-        - Arn: !Ref CodePipeline
+        - Arn: !GetAtt CodePipeline.Arn
           Id: codepipeline
           RoleArn: !GetAtt EventBridgeRole.Arn
 
