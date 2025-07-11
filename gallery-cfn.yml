@@ -538,7 +538,9 @@ Resources:
 
   PipelineDataBucket:
     Type: AWS::S3::Bucket
-
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
 
   EventBridgeRole:
     Type: AWS::IAM::Role
