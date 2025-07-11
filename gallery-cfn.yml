@@ -16,11 +16,9 @@ Parameters:
 
   AwsAccessKeyEnv:
     Type: String
-    Default: "{{resolve:secretsmanager:AWS_ACCESS_KEY_ID:SecretString:token}}"
 
   AwsSecretAccessKeyEnv:
     Type: String
-    Default: "{{resolve:secretsmanager:AWS_SECRET_ACCESS_KEY:SecretString:token}}"
 
 Resources:
   VPC:
