@@ -606,7 +606,7 @@ Resources:
           image-tag:
             - latest
       Targets:
-        - Arn: !Ref CodePipeline
+        - Arn: !Sub arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:gallery-app-pipeline
           Id: codepipeline
           RoleArn: !GetAtt EventBridgeRole.Arn
 
