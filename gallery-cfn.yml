@@ -408,6 +408,9 @@ Resources:
 
   CodeDeployDeploymentGroup:
     Type: AWS::CodeDeploy::DeploymentGroup
+    DependsOn:
+      - ECSService
+      - ECSCluster
     Properties:
       ApplicationName: !Ref CodeDeployApplication
       DeploymentGroupName: springboot-codedeploy-group
@@ -426,8 +429,8 @@ Resources:
       LoadBalancerInfo:
         TargetGroupPairInfoList:
           - TargetGroups:
-              - Name: !Select [ 2, !Split [ "/", !Ref TargetGroupBlue ] ]
-              - Name: !Select [ 2, !Split [ "/", !Ref TargetGroupGreen ] ]
+              - Name: !GetAtt TargetGroupBlue.TargetGroupName
+              - Name: !GetAtt TargetGroupGreen.TargetGroupName
             ProdTrafficRoute:
               ListenerArns:
                 - !Ref Listener
