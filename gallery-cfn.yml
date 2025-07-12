@@ -627,7 +627,7 @@ Resources:
                 Version: 1
               Configuration:
                 S3Bucket: !Ref PipelineDataBucket
-                S3ObjectKey: deployments/pipeline-configs.zip
+                S3ObjectKey: pipeline-configs.zip
                 PollForSourceChanges: false
               OutputArtifacts:
                 - Name: SourceOutput
