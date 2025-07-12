@@ -2,16 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: All-in-One Stack VPC, ECS Infra, and CI/CD Pipeline for Spring Boot Blue/Green Deployment
 
 Parameters:
-  GitHubBranch:
-    Type: String
-    Default: main
-
-  GitHubRepo:
-    Type: String
-
-  GitHubOAuthToken:
-    Type: String
-
   ImageURI:
     Type: String
     Description: Application image URI
@@ -549,6 +539,7 @@ Resources:
   PipelineDataBucket:
     Type: AWS::S3::Bucket
     Properties:
+      BucketName: gallery-app-pipeline-config-bucket
       VersioningConfiguration:
         Status: Enabled
 
@@ -626,21 +617,20 @@ Resources:
         Type: S3
         Location: !Ref PipelineDataBucket
       Stages:
-        - Name: Source
+        - Name: SourceFromS3
           Actions:
-            - Name: GitHubSource
+            - Name: SourceFromS3
               ActionTypeId:
                 Category: Source
-                Owner: ThirdParty
-                Provider: GitHub
+                Owner: AWS
+                Provider: S3
                 Version: 1
+              Configuration:
+                S3Bucket: !Ref PipelineDataBucket
+                S3ObjectKey: deployments/pipeline-configs.zip
+                PollForSourceChanges: false
               OutputArtifacts:
                 - Name: SourceOutput
-              Configuration:
-                Owner: !Select [ 0, !Split [ "/", !Ref GitHubRepo ] ]
-                Repo: !Select [ 1, !Split [ "/", !Ref GitHubRepo ] ]
-                Branch: !Ref GitHubBranch
-                OAuthToken: !Ref GitHubOAuthToken
               RunOrder: 1
         - Name: DeployToECS
           Actions:
