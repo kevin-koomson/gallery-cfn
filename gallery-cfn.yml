@@ -548,6 +548,7 @@ Resources:
 
   PipelineDataBucket:
     Type: AWS::S3::Bucket
+    BucketName: gallery-app-pipeline-config-bucket
     Properties:
       VersioningConfiguration:
         Status: Enabled
@@ -626,21 +627,20 @@ Resources:
         Type: S3
         Location: !Ref PipelineDataBucket
       Stages:
-        - Name: Source
+        - Name: SourceFromS3
           Actions:
-            - Name: GitHubSource
+            - Name: SourceFromS3
               ActionTypeId:
                 Category: Source
-                Owner: ThirdParty
-                Provider: GitHub
+                Owner: AWS
+                Provider: S3
                 Version: 1
+              Configuration:
+                S3Bucket: !Ref PipelineDataBucket
+                S3ObjectKey: deployments/pipeline-configs.zip
+                PollForSourceChanges: false
               OutputArtifacts:
                 - Name: SourceOutput
-              Configuration:
-                Owner: !Select [ 0, !Split [ "/", !Ref GitHubRepo ] ]
-                Repo: !Select [ 1, !Split [ "/", !Ref GitHubRepo ] ]
-                Branch: !Ref GitHubBranch
-                OAuthToken: !Ref GitHubOAuthToken
               RunOrder: 1
         - Name: DeployToECS
           Actions:
