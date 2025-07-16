@@ -239,7 +239,17 @@ Resources:
       TargetType: ip
       HealthCheckPath: /
 
-  Listener:
+  ListenerBlue:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroupBlue
+      LoadBalancerArn: !Ref ALB
+      Port: 80
+      Protocol: HTTP
+
+  ListenerGreen:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       DefaultActions:
@@ -295,7 +305,7 @@ Resources:
 
   ECSService:
     Type: AWS::ECS::Service
-    DependsOn: Listener
+    DependsOn: ListenerBlue
     Properties:
       TaskDefinition: !Ref TaskDefinition
       ServiceName: springboot-service
@@ -431,7 +441,8 @@ Resources:
               - Name: !Select [ 2, !Split [ "/", !Ref TargetGroupGreen ] ]
             ProdTrafficRoute:
               ListenerArns:
-                - !Ref Listener
+                - !Ref ListenerBlue
+                - !Ref ListenerGreen
       ECSServices:
         - ClusterName: !Ref ECSCluster
           ServiceName: !Ref ECSService
