@@ -234,7 +234,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       VpcId: !Ref VPC
-      Port: 8080
+      Port: 8081
       Protocol: HTTP
       TargetType: ip
       HealthCheckPath: /
@@ -256,7 +256,7 @@ Resources:
         - Type: forward
           TargetGroupArn: !Ref TargetGroupBlue
       LoadBalancerArn: !Ref ALB
-      Port: 80
+      Port: 81
       Protocol: HTTP
 
   ECSServiceSG:
@@ -326,6 +326,10 @@ Resources:
         - ContainerName: springboot-container
           ContainerPort: 8080
           TargetGroupArn: !Ref TargetGroupBlue
+        - ContainerName: springboot-container
+          ContainerPort: 8081
+          TargetGroupArn: !Ref TargetGroupGreen
+
 
   ECSExecutionRole:
     Type: AWS::IAM::Role
